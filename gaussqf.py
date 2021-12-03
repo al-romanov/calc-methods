@@ -1,6 +1,6 @@
 from secant import secant
 
-def get_legendre_polynoms(n):
+def get_legendre_polynom(n):
     polynom1 = [1]
     polynom2 = [0, 1]
     for i in range(2, n + 1):
@@ -23,13 +23,13 @@ def compute_polynom(polynom, x):
 def get_units(a, b, n):
     H = 0.001
     m = 1 + int(abs(b - a) / H)
-    polynom = get_legendre_polynoms(n)
+    polynom = get_legendre_polynom(n)
     return secant(lambda x: compute_polynom(polynom, x), a, b, m, 1e-12)
 
 def get_coefficients(a, b, units):
     n = len(units)
     if n > 0:
-        polynom = get_legendre_polynoms(n - 1)
+        polynom = get_legendre_polynom(n - 1)
     return [2 * (1 - x_k * x_k) / (n * n * compute_polynom(polynom, x_k) ** 2) for x_k in units]
 
 def gauss_qf(f, a, b, n):
