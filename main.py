@@ -1,14 +1,16 @@
-import gaussqf
+import compoundgaussqf
 import math
 
 def f(x):
     return math.exp(x)
-
 def ro(x):
     return math.sin(x)
 
 def fi(x):
     return ro(x) * f(x)
+
+def fi_integral(a, b):
+    return 1 / 2 * (math.sin(b) * math.exp(b) - math.cos(b) * math.exp(b) - math.sin(a) * math.exp(a) + math.cos(a) * math.exp(a))
 
 print("Лабораторная работа №5")
 print("Приближенное вычисление интегралов при помощи КФ НАСТ")
@@ -21,11 +23,15 @@ while status == "y":
     n = int(input("Введите число узлов КФ (n): "))
     m = int(input("Введите число отрезков деления [{}, {}] (m): ".format(a, b)))
     h = (b - a) / m
-    for
-    res = 0
-    for i in range(m):
-        z1 = a + i * h
-        z2 = a + (i + 1) * h
-        res += gaussqf.gauss_qf(fi, z1, z2, n)
+    print("Узлы и коэффициенты исходной КФ Гаусса:")
+    units = compoundgaussqf.get_units(n)
+    coefficients = compoundgaussqf.get_coefficients(units)
+    units = [a + (b - a) / 2 * (x_k + 1) for x_k in units]
+    coefficients = [coef * (b - a) / 2 for coef in coefficients]
+    number_len = max([len(str(unit)) + 1 for unit in units])
+    for i in range(len(units)):
+        print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
+    res = compoundgaussqf.gauss_qf(fi, a, b, n, m)
     print("Результат СКФ Гаусса: {:.12f}".format(res))
+    print("Абсолютная фактическая погрешность: {}".format(abs(fi_integral(a, b) - res)))
     status = input("Хотите продолжить? y/[n] ")

@@ -34,9 +34,15 @@ def get_coefficients(units):
         polynom = get_legendre_polynom(n - 1)
     return [2 * (1 - x_k * x_k) / (n * n * compute_polynom(polynom, x_k) ** 2) for x_k in units]
 
-def gauss_qf(f, a, b, n):
+def gauss_qf(f, a, b, n, m):
     units = get_units(n)
     coefficients = get_coefficients(units)
-    units = [a + (b - a) / 2 * (x_k + 1) for x_k in units]
-    coefficients = [coef * (b - a) / 2 for coef in coefficients]
-    return sum([f(units[i]) * coefficients[i] for i in range(len(units))])
+    h = (b - a) / m
+    #coefficients = [coef * h / 2 for coef in coefficients]
+    s = 0.0
+    for j in range(m):
+        z1 = a + j * h
+        z2 = a + (j + 1) * h
+        units_j = [t_k * h / 2 + (z1 + z2) / 2 for t_k in units]
+        s += sum([f(units_j[i]) * coefficients[i] for i in range(n)])
+    return s * h / 2
