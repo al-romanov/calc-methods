@@ -39,7 +39,4 @@ def gauss_qf(f, a, b, n):
     coefficients = get_coefficients(units)
     units = [a + (b - a) / 2 * (x_k + 1) for x_k in units]
     coefficients = [coef * (b - a) / 2 for coef in coefficients]
-    res = 0
-    for i in range(len(coefficients)):
-        res += coefficients[i] * f(units[i])
-    return res
+    return sum([f(units[i]) * coefficients[i] for i in range(len(units))])
