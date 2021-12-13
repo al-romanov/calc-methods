@@ -1,4 +1,5 @@
 import gaussqf
+import melerqf
 from math import cos, pi, exp, sin
 
 def polynom_str(polynom):
@@ -53,13 +54,12 @@ for n in (3, 4, 5):
     print("\tАбсолютная фактическая погрешность:", abs(gauss_integral - actual_integral))
 
 print("Вычисление интеграла функции f(x) = cos(x^2) при помощи КФ Гаусса")
-n_test = 1
 status = "y"
 while status == "y":
+    n_test = 1
     a, b = map(float, input("Введите пределы интегрирования [a, b]: ").split(","))
     for n in (3, 6, 7, 8):
         print("{})".format(n_test), end="")
-
         n_test += 1
         print("\tКоличество узлов: {}".format(n))
         units = gaussqf.get_units(n)
@@ -70,10 +70,26 @@ while status == "y":
         print("\tУзлы и коэффициенты:")
         for i in range(len(units)):
             print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
-        print("Результат:", gaussqf.gauss_qf(gauss_f, a, b, n))
+        print("Результат: {:.12f}".format(gaussqf.gauss_qf(gauss_f, a, b, n)))
     status = input("Вы хотите продолжить? [y/N]:")
 
 print("Вычисление интеграла функции exp(x) * sin(x^2) / sqrt(1 - x^2) при помощи КФ Мелера")
 print("Вес ro(x) = 1 / sqrt(1 - x^2)")
 print("f(x) =  exp(x) * sin(x^2)")
-
+print("Пределы интегрирования [-1, 1]")
+status = "y"
+while status == "y":
+    ns = map(int, input("Введите 3 целых числа(количество узлов): ").split(","))
+    n_test = 1
+    for n in ns:
+        print("{})".format(n_test), end="")
+        n_test += 1
+        print("\tКоличество узлов: {}".format(n))
+        units = melerqf.get_units(n)
+        coefficients = melerqf.get_coefficients(n)
+        number_len = max([len(str(unit)) + 1 for unit in units])
+        print("\tУзлы и коэффициенты:")
+        for i in range(len(units)):
+            print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
+        print("Результат: {:.12f}".format(melerqf.meler_qf(meler_f, n)))
+    status = input("Вы хотите продолжить? [y/N]:")
