@@ -38,7 +38,6 @@ def gauss_qf(f, a, b, n, m):
     units = get_units(n)
     coefficients = get_coefficients(units)
     h = (b - a) / m
-    #coefficients = [coef * h / 2 for coef in coefficients]
     s = 0.0
     for j in range(m):
         z1 = a + j * h

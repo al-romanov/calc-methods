@@ -1,7 +1,7 @@
 import math
 
 def gauss_qf2(f, a, b, moments):
-    ms = [moment(b) - moment(a) for moment in moments]
+    ms = [abs(moment(b) - moment(a)) for moment in moments]
     print("Моменты весовой функции:")
     for i in range(len(ms)):
         print("\tMu{} = {}".format(i, ms[i]))

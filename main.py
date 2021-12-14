@@ -26,8 +26,8 @@ MOMENTS = [lambda x: math.exp(x),
 print("Лабораторная работа №6")
 print("Приближенное вычисление интегралов при помощи КФ НАСТ")
 print("Вариант №8")
-print("Вес: ro(x) = exp(x)")
-print("Функция: f(x) = sin(x)")
+print("ro(x) = exp(x)")
+print("f(x) = sin(x)")
 print("Приближенное вычисление интегралов при помощи СКФ Гаусса")
 status = "y"
 while status == "y":
@@ -38,8 +38,6 @@ while status == "y":
     print("Узлы и коэффициенты исходной КФ Гаусса:")
     units = compoundgaussqf.get_units(n)
     coefficients = compoundgaussqf.get_coefficients(units)
-    units = [a + (b - a) / 2 * (x_k + 1) for x_k in units]
-    coefficients = [coef * (b - a) / 2 for coef in coefficients]
     number_len = max([len(str(unit)) + 1 for unit in units])
     for i in range(len(units)):
         print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
