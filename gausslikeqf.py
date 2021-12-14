@@ -2,7 +2,7 @@ import math
 
 def gauss_qf2(f, a, b, moments):
     ms = [moment(b) - moment(a) for moment in moments]
-    print("Моменты весовой функции")
+    print("Моменты весовой функции:")
     for i in range(len(ms)):
         print("\tMu{} = {}".format(i, ms[i]))
     a1 = (ms[0] * ms[3] - ms[2] * ms[1]) / (ms[1] * ms[1] - ms[2] * ms[0])

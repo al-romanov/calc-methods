@@ -23,7 +23,7 @@ MOMENTS = [lambda x: math.exp(x),
         lambda x: (x ** 2 - 2 * x + 2) * math.exp(x),
         lambda x: (x ** 3 - 3 * x ** 2 + 6 * x - 6) * math.exp(x)]
 
-print("Лабораторная работа №5")
+print("Лабораторная работа №6")
 print("Приближенное вычисление интегралов при помощи КФ НАСТ")
 print("Вариант №8")
 print("Вес: ro(x) = exp(x)")
@@ -44,7 +44,7 @@ while status == "y":
     for i in range(len(units)):
         print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
     res = compoundgaussqf.gauss_qf(fi, a, b, n, m)
-    print("Результат СКФ Гаусса: {:.12f}".format(res))
+    print("Результат СКФ Гаусса для функции exp(x) * sin(x): {:.12f}".format(res))
     print("Абсолютная фактическая погрешность: {}".format(abs(fi_integral(a, b) - res)))
     status = input("Хотите продолжить? y/[n] ")
 
@@ -56,7 +56,7 @@ while status == "y":
     res = gausslikeqf.gauss_qf2(pol_deg3, a, b, MOMENTS)
     print("\tРезультат: {:.12f}".format(res))
     print("\tАбсолютная фактическая погрешность:", abs(res - (MOMENTS[3](b) - MOMENTS[3](a))))
-    print("Вычисление интеграла ro(x)*f(x)")
+    print("Вычисление интеграла exp(x) * sin(x)")
     res = gausslikeqf.gauss_qf2(f, a, b, MOMENTS)
     print("Результат: {:.12f}".format(res))
     print("Абсолютная фактическая погрешнось:", abs(fi_integral(a, b) - res))
