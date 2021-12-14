@@ -27,7 +27,7 @@ def meler_f(x):
 
 print("Лабораторная работа №5")
 print("Вычисление интегралов при помощи КФ Гаусса")
-print("Лабораторная работа №8")
+print("Вариант №8")
 print("Коэффициенты и узлы КФ Гаусса")
 for n in range(1, 9):
     print("N = {}:".format(n))
@@ -70,7 +70,7 @@ while status == "y":
         print("\tУзлы и коэффициенты:")
         for i in range(len(units)):
             print("\t{}".format(units[i]).ljust(number_len), "<-> {}".format(coefficients[i]))
-        print("Результат: {:.12f}".format(gaussqf.gauss_qf(gauss_f, a, b, n)))
+        print("\tРезультат: {:.12f}".format(gaussqf.gauss_qf(gauss_f, a, b, n)))
     status = input("Вы хотите продолжить? [y/N]:")
 
 print("Вычисление интеграла функции exp(x) * sin(x^2) / sqrt(1 - x^2) при помощи КФ Мелера")
