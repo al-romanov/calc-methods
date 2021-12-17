@@ -18,10 +18,10 @@ def fi(x):
 def fi_integral(a, b):
     return 1 / 2 * (math.sin(b) * math.exp(b) - math.cos(b) * math.exp(b) - math.sin(a) * math.exp(a) + math.cos(a) * math.exp(a))
 
-MOMENTS = [lambda x: math.exp(x),
-        lambda x: (x - 1) * math.exp(x),
-        lambda x: (x ** 2 - 2 * x + 2) * math.exp(x),
-        lambda x: (x ** 3 - 3 * x ** 2 + 6 * x - 6) * math.exp(x)]
+def moment(n, x):
+    if n == 0:
+        return math.exp(x)
+    return math.exp(x) * x ** n - n * moment(n - 1, x)
 
 print("Лабораторная работа №6")
 print("Приближенное вычисление интегралов при помощи КФ НАСТ")
@@ -50,12 +50,13 @@ print("Приближенное вычисление интегралов при
 status = "y"
 while status == "y":
     a, b = map(float, input("Введите пределы интегрирования [a, b]: ").split(","))
+    n = int(input("Введите количество узлов: "))
     print("Проверка формулы на полиноме x^3:")
-    res = gausslikeqf.gauss_qf2(pol_deg3, a, b, MOMENTS)
+    res = gausslikeqf.gauss_qf2(pol_deg3, a, b, n, moment)
     print("\tРезультат: {:.12f}".format(res))
-    print("\tАбсолютная фактическая погрешность:", abs(res - (MOMENTS[3](b) - MOMENTS[3](a))))
+    print("\tАбсолютная фактическая погрешность:", abs(res - (moment(3, b) - moment(3, a))))
     print("Вычисление интеграла exp(x) * sin(x)")
-    res = gausslikeqf.gauss_qf2(f, a, b, MOMENTS)
+    res = gausslikeqf.gauss_qf2(f, a, b, n, moment)
     print("Результат: {:.12f}".format(res))
     print("Абсолютная фактическая погрешнось:", abs(fi_integral(a, b) - res))
     status = input("Хотите продолжить? y/[n] ")
