@@ -12,18 +12,19 @@ def gauss_qf2(f, a, b, n, moment):
     print("Коэффициенты ортогонального многочлена:")
     for i, coef in enumerate(ort_pol_coefs):
         print("\ta{} = {}".format(i + 1, coef))
-    print([1, *ort_pol_coefs])
     nodes = numpy.roots([1, *ort_pol_coefs])
-
+    nodes = [float(i) for i in nodes if i.imag == 0 and float(i) > a and float(i) < b]
     print("Узлы КФ:")
     for i, node in enumerate(nodes):
         print("\tx{} = {}".format(i + 1, node))
-    ro = lambda x: moment(0, x)
+    if len(nodes) != n:
+        print("Некоторые узлы оказались не вещественными или не лежат внутри [{}, {}]".format(a, b))
+    n = len(nodes)
     eq_lvalues = [[node ** i for node in nodes] for i in range(n)]
     eq_rvalues = [moment(i, b) - moment(i, a) for i in range(n)]
     coefs = numpy.linalg.solve(eq_lvalues, eq_rvalues)
     print("Коэффициенты КФ:")
     for i, coef in enumerate(coefs):
         print("\tA{} = {}".format(i + 1, coef))
-    return sum([coefs[i] * f(nodes[i]) for i in range(n)])
+    return sum([coefs[i] * f(nodes[i]) for i in range(len(nodes))])
 
