@@ -1,8 +1,13 @@
 import math
 import numpy
+from typing import List, Any, Callable
+from scipy.integrate import quad
 
-def gauss_qf2(f, a, b, n, moment):
-    ms = [moment(i, b) - moment(i, a) for i in range(2 * n)]
+def calculate_moments(f: Callable, degree: int, a: float, b: float) -> List[float]:
+    return [quad(lambda x: f(x) * x ** i, a, b, epsabs=1.49e-10, epsrel=1.49e-10)[0] for i in range(0, degree + 1)]
+
+def gauss_qf2(f, ro, a, b, n):
+    ms = calculate_moments(ro, 2 * n - 1, a, b)
     print("Моменты весовой функции:")
     for i in range(len(ms)):
         print("\tMu{} = {}".format(i, ms[i]))
@@ -21,7 +26,7 @@ def gauss_qf2(f, a, b, n, moment):
         print("Некоторые узлы оказались не вещественными или не лежат внутри [{}, {}]".format(a, b))
     n = len(nodes)
     eq_lvalues = [[node ** i for node in nodes] for i in range(n)]
-    eq_rvalues = [moment(i, b) - moment(i, a) for i in range(n)]
+    eq_rvalues = [ms[i] for i in range(n)]
     coefs = numpy.linalg.solve(eq_lvalues, eq_rvalues)
     print("Коэффициенты КФ:")
     for i, coef in enumerate(coefs):
